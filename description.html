@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>EEGTrust Dataset</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                line-height: 1.6;
+                margin: 0;
+                padding: 0;
+                color: #333;
+                background-color: #f9f9f9;
+            }
+            /* Header banner style */
+            .header-banner {
+                background-color: #8b0000;
+                color: white;
+                text-align: left;
+                padding: 30px 0 0 0;
+                margin: 0;
+                position: relative;
+            }
+            .dataset-title {
+                font-size: 2.5em;
+                font-weight: bold;
+                margin: 0;
+                padding-left: 10%;
+            }
+            .dataset-subtitle {
+                font-size: 1em;
+                margin-top: 5px;
+                padding-left: 10%;
+                padding-bottom: 10px;
+            }
+            .nav-tabs {
+                display: flex;
+                justify-content: flex-start;
+                padding-left: 10%;
+                padding-right: 10%;
+                margin-top: 20px;
+                background-color: #8b0000;
+            }
+            .nav-tab {
+                padding: 10px 20px;
+                background-color: #992222;
+                color: white;
+                text-decoration: none;
+                margin-right: 4px;
+                font-weight: normal;
+                border-top-left-radius: 4px;
+                border-top-right-radius: 4px;
+            }
+            .nav-tab.active {
+                background-color: white;
+                color: #333;
+            }
+            /* Content container style */
+            .container {
+                max-width: 1000px;
+                margin: 0 auto;
+                padding: 20px;
+                background-color: white;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            }
+            h1 {
+                color: #005699;
+                margin-top: 0;
+            }
+            h2 {
+                color: #005699;
+                border-bottom: 1px solid #eee;
+                padding-bottom: 10px;
+            }
+            h3 {
+                color: #005699;
+                margin-top: 25px;
+            }
+            .contact-section {
+                background-color: #f5f5f5;
+                padding: 20px;
+                border-radius: 4px;
+                margin-bottom: 30px;
+            }
+            .contact-info {
+                margin-bottom: 20px;
+            }
+            .contact-info p {
+                margin: 5px 0;
+            }
+            .contact-info strong {
+                display: inline-block;
+                width: 120px;
+            }
+            .form-section {
+                background-color: #eef6fb;
+                padding: 20px;
+                border-radius: 4px;
+                margin-top: 20px;
+            }
+            .form-group {
+                margin-bottom: 15px;
+            }
+            label {
+                display: block;
+                margin-bottom: 5px;
+                font-weight: bold;
+            }
+            input[type="text"],
+            input[type="email"],
+            textarea,
+            select {
+                width: 100%;
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-sizing: border-box;
+            }
+            textarea {
+                min-height: 150px;
+            }
+            .submit-button {
+                background-color: #005699;
+                color: white;
+                border: none;
+                padding: 10px 20px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-weight: bold;
+            }
+            .submit-button:hover {
+                background-color: #004080;
+            }
+            .team-section {
+                margin-top: 40px;
+            }
+            .team-member {
+                display: flex;
+                margin-bottom: 30px;
+                padding-bottom: 20px;
+                border-bottom: 1px solid #eee;
+            }
+            .team-member:last-child {
+                border-bottom: none;
+            }
+            .team-photo {
+                width: 150px;
+                height: 150px;
+                margin-right: 20px;
+                background-color: #eee;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 4px;
+            }
+            .team-photo img {
+                max-width: 100%;
+                max-height: 100%;
+                border-radius: 4px;
+            }
+            .team-info {
+                flex: 1;
+            }
+            .team-name {
+                margin-top: 0;
+                color: #005699;
+                font-size: 1.2em;
+            }
+            .team-title {
+                color: #666;
+                margin-bottom: 10px;
+                font-style: italic;
+            }
+            .faq-item {
+                margin-bottom: 20px;
+            }
+            .faq-question {
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: #005699;
+            }
+            .faq-answer {
+                margin-left: 0;
+            }
+            .social-links {
+                margin-top: 20px;
+            }
+            .social-links a {
+                display: inline-block;
+                margin-right: 15px;
+                color: #0066cc;
+            }
+            /* Footer style */
+            .footer {
+                text-align: center;
+                margin-top: 50px;
+                padding: 20px 0;
+                border-top: 1px solid #eee;
+            }
+            .university-logos {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 40px;
+                margin: 20px 0;
+            }
+            .university-logos img {
+                height: 50px;
+                max-width: 2000px;
+            }
+            table {
+            border-collapse: collapse;
+            width: 80%;
+            margin: 20px auto;
+            font-family: Arial, sans-serif;
+        }
+        
+        caption {
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        
+        .section-header {
+            background-color: #f2f2f2;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+        }
+        
+        .wide-column {
+            width: 60%;
+        }
+        </style>
+    </head>
+<body>
+    
+    <div class="header-banner">
+        <div class="dataset-title">EEGTrust Dataset</div>
+        <div class="dataset-subtitle">A dataset for human-robot trust research with EEG</div>
+        <div class="nav-tabs">
+            <a href="index.html" class="nav-tab">home</a>
+            <a href="description.html" class="nav-tab active">dataset description</a>
+            <a href="download.html" class="nav-tab">download</a>
+            <a href="contact.html" class="nav-tab">contact</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- <div class="container"></div> -->
+        <div class="section">
+            <h2>1. Dataset Overview</h2>
+            <p style="text-align: justify;">The EEGTrust dataset consists of the participant ratings, EEG recordings, face videos, questionnaires, and trajectories of an experiment where 16 volunteers joined a human-robot collaboration game. EEG were recorded and each participant also rated the trust level each trial. For 12 participants, the frontal face video was also recorded.</p>
+
+            <!-- <img src="/api/placeholder/600/400" alt="Dataset Collection Flow Chart"> -->
+            <table>
+                <caption>Summary of the EEGTrust Dataset</caption>
+                <tr>
+                    <td colspan="3" class="section-header"><strong>Participant and Experimental Design</strong></td>
+                </tr>
+                <tr>
+                    <td>Subjects</td>
+                    <td colspan="2">16 university students</td>
+                </tr>
+                <tr>
+                    <td>Task</td>
+                    <td colspan="2">Overcooked-AI cooperative game</td>
+                </tr>
+                <tr>
+                    <td>Trust Stimuli</td>
+                    <td colspan="2">Robot ability (3 levels), Task layouts (5 types)</td>
+                </tr>
+                <tr>
+                    <td>Trials per Condition</td>
+                    <td colspan="2">2</td>
+                </tr>
+                <tr>
+                    <td>Trial Duration</td>
+                    <td colspan="2">60 s</td>
+                </tr>
+                <tr>
+                    <td>Data Segmentation</td>
+                    <td colspan="2">1 s epochs</td>
+                </tr>
+                <tr>
+                    <td>Samples per Subject</td>
+                    <td colspan="2">1800 (3 robots × 5 layouts × 2 trials × 60 s)</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="section-header"><strong>Data Acquisition</strong></td>
+                </tr>
+                <tr>
+                    <td>Data Type</td>
+                    <td>Collection Method</td>
+                    <td>Specifications</td>
+                </tr>
+                <tr>
+                    <td>EEG</td>
+                    <td>64-channel G.TEC system</td>
+                    <td>250 Hz</td>
+                </tr>
+                <tr>
+                    <td>Trust Ratings</td>
+                    <td>5-point Likert scale</td>
+                    <td>Post-trial</td>
+                </tr>
+                <tr>
+                    <td>Facial Data</td>
+                    <td>Intel Realsense D435</td>
+                    <td>60 Hz</td>
+                </tr>
+                <tr>
+                    <td colspan="3" class="section-header"><strong>Labels</strong></td>
+                </tr>
+                <tr>
+                    <td>Format</td>
+                    <td colspan="2">Binary (trust/distrust)</td>
+                </tr>
+                <tr>
+                    <td>Method</td>
+                    <td colspan="2">Individual-specific thresholds</td>
+                </tr>
+            </table>
+
+        <div class="section">
+            <h2>2. File Description</h2>
+            <!-- <p style="text-align: justify;">The dataset is organized in a hierarchical directory structure, mainly containing the following parts:</p> -->
+
+            <!-- <div class="code-block">
+data/
+├── raw/                    # Raw data
+│   ├── subject_001/        # Subject 001 data
+│   │   ├── signals/        # Physiological signal data
+│   │   ├── videos/         # Video recordings
+│   │   └── questionnaires/ # Questionnaire data
+│   ├── subject_002/
+│   └── ...
+├── processed/              # Preprocessed data
+│   ├── features/           # Extracted features
+│   ├── annotations/        # Annotation data
+│   └── statistics/         # Statistical analysis results
+├── metadata/               # Metadata files
+└── documentation/          # Documentation and instructions
+    ├── protocols/          # Experimental protocols
+    └── code/               # Data processing code
+            </div> -->
+
+            <h3>2.1 File Listing</h3>
+            <p>The following file formats are used in the dataset:</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Field Name</th>
+                            <th>Data Type</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Information and Ratings</td>
+                            <td>.csv</td>
+                            <td>The experimental information including types of robots and layouts and participants' trust ratings.</td>
+                        </tr>
+                        <tr>
+                            <td>Original EEG</td>
+                            <td>.hdf5</td>
+                            <td>The original unprocessed EEG data recordings from the experiment.</td>
+                        </tr>
+                        <tr>
+                            <td>EEG Preprocessed</td>
+                            <td>.fdt</td>
+                            <td>The preprocessed (downsampling, EOG removal, filtering, segmenting, etc.) 
+                                EEG data recordings using MATLAB EEGLAB.</td>
+                        </tr>
+                        <tr>
+                            <td>Face video</td>
+                            <td>.mp4</td>
+                            <td>The frontal face video recordings, through an HD camera.</td>
+                        </tr>
+                        <tr>
+                            <td>Trajectories</td>
+                            <td>.json</td>
+                            <td>The game trajectory from the experiment for the participants 2,3,4-16.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>2.2 File details</h3>
+            <h4>Information and Ratings</h4>
+            <p style="text-align: justify;">The dataset includes one CSV file per subject, containing 
+                comprehensive experimental information and participant ratings. Each file documents 
+                the participant ID, trial number, and layout configuration details, alongside three
+                 distinct trust rating measurements, their calculated average, and thresholds-based 
+                 labels calibrated to individual participants to ensure balanced data distribution.
+                  Detailed specifications for each column are provided in the table below.</p>
+                  <table>
+                    <thead>
+                        <tr>
+                            <th>Column Name</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Participant_id</td>
+                            <td>Unique identifier for each participant (ranges from 1 to 16)</td>
+                        </tr>
+                        <tr>
+                            <td>Trial</td>
+                            <td>Sequential number identifying each experimental trial</td>
+                        </tr>
+                        <tr>
+                            <td>Layout</td>
+                            <td>Experimental layout configuration (categorized from 1 to 5)</td>
+                        </tr>
+                        <tr>
+                            <td>Robot</td>
+                            <td>Robot capability classification: 1 = high ability, 2 = medium ability, 3 = low ability</td>
+                        </tr>
+                        <tr>
+                            <td>Ability</td>
+                            <td>Participant's rating of robot ability on a 5-point Likert scale</td>
+                        </tr>
+                        <tr>
+                            <td>Teamwork</td>
+                            <td>Participant's rating of robot teamwork capability on a 5-point Likert scale</td>
+                        </tr>
+                        <tr>
+                            <td>Trustworthy</td>
+                            <td>Participant's assessment of robot trustworthiness on a 5-point Likert scale</td>
+                        </tr>
+                        <tr>
+                            <td>Average_rating</td>
+                            <td>Mean value of all trust-related ratings on the 5-point Likert scale</td>
+                        </tr>
+                        <tr>
+                            <td>Label</td>
+                            <td>Binary trust classification determined using participant-specific thresholds to ensure balanced data distribution</td>
+                        </tr>
+                    </tbody>
+                 </table>
+            <h4>Original EEG</h4>
+            <p style="text-align: justify;">The repository contains raw data recordings organized into 16 individual folders, each corresponding to a single participant. Within these folders, you'll find "subXX.hdf5" files containing the complete EEG recordings and corresponding "subXX_event.txt" files that mark the precise starting timestamp for each experimental trial, where XX represents the participant identifier.</p>
+
+            <p style="text-align: justify;">EEG data was collected using a high-precision 64-electrode G.TEC system with electrodes positioned according to the standard international 10-20 system. All neural activity was digitized at a sampling rate of 250 Hz to ensure optimal signal quality. The detailed electrode configuration is illustrated below.</p>
+            <div class="img-gallery" style="text-align: center;">
+                <img src="figs/eeg.png" alt="Experimental Equipment" width="500" height="auto">
+            </div>
+            <h4>Preprocessed EEG</h4>
+            <p style="text-align: justify;">For researchers seeking to test classification or regression techniques without processing the raw data, we provide comprehensively preprocessed datasets. The EEG signals have undergone rigorous preprocessing, including Common Average Reference (CAR) re-referencing and bandpass filtering between 0.5 and 60 Hz. Additionally, Independent Component Analysis (ICA) was implemented to effectively remove common artifacts such as eye movements and muscle activities. All preprocessing was conducted using industry-standard EEGLAB toolbox and MATLAB software.</p>
+
+            <p style="text-align: justify;">Each participant's processed data consists of two complementary files:</p>
+
+            <ul>
+            <li><strong>.set file:</strong> This primary EEGLAB format file contains all essential metadata of the EEG recordings, including channel locations, event markers, sampling frequency, reference electrode specifications, and other experimental parameters. It exists as a MATLAB structure that comprehensively documents all data characteristics.</li>
+            
+            <li><strong>.fdt file:</strong> This companion binary file contains the actual EEG signal data. EEGLAB stores the time-series measurements separately in this format to facilitate more efficient data processing, particularly important given the substantial size of high-density EEG recordings.</li>
+            </ul>
+
+            <p style="text-align: justify;">Sample Python code for loading the preprocessed dataset is provided below:</p>
+                
+            <pre><code>
+                import mne
+                import numpy as np
+                
+                # Load EEGLAB epochs
+                epochs = mne.io.read_epochs_eeglab('sub01.set')
+                
+                # Initialize array to store processed data
+                X = np.empty((0, 60, 64, 250))
+                
+                # Process each epoch
+                for epoch in epochs:
+                   # Reshape to (channels, time_windows, samples) and transpose
+                   data = epoch[:,:].reshape((64, 60, 250)).transpose(1, 0, 2)
+                   # Append to collection array
+                   X = np.vstack((X, data.reshape(1, *data.shape)))
+                </code></pre>
+            
+            <h4>Trajectories</h4>
+            <p style="text-align: justify;">The dataset includes 30 trajectory files per participant, each corresponding to an individual experimental trial. These files contain comprehensive timestep-by-timestep records of the game task's state, including detailed information about the environment configuration and the status of both players throughout the interaction. For an in-depth analysis and further details about the dataset structure, please refer to the <a href="https://github.com/HumanCompatibleAI/overcooked_ai"> Overcooked-AI</a>.</p>
+        </div>
+
+        <!-- <div class="section">
+            <h2>3. Annotation Information</h2>
+            <p>The dataset includes the following annotations:</p>
+            <ul>
+                <li><strong>Self-assessment annotations</strong>: participants' self-assessment of [annotation content]</li>
+                <li><strong>External annotations</strong>: assessment of [annotation content] by [number] experts</li>
+                <li><strong>Computational annotations</strong>: algorithmically generated [annotation content]</li>
+            </ul>
+
+            <h3>3.1 Annotation Methods</h3>
+            <p>[Detailed description of annotation process, scales used, and scoring criteria]</p>
+
+            <h3>3.2 Annotation Consistency</h3>
+            <p>Inter-annotator consistency was evaluated using [evaluation method], showing [consistency results].</p>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Annotation Category</th>
+                            <th>Consistency Metric</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Category 1</td>
+                            <td>Metric Name</td>
+                            <td>0.XX</td>
+                        </tr>
+                        <tr>
+                            <td>Category 2</td>
+                            <td>Metric Name</td>
+                            <td>0.XX</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>4. Baseline Methods</h2>
+            <p>We provide the following baseline methods for [task description]:</p>
+
+            <h3>4.1 Feature Extraction</h3>
+            <p>[Description of feature extraction methods used]</p>
+
+            <h3>4.2 Classification/Regression Methods</h3>
+            <p>[Description of machine learning methods used]</p>
+
+            <h3>4.3 Baseline Results</h3>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Accuracy</th>
+                            <th>F1 Score</th>
+                            <th>Other Metrics</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Method 1</td>
+                            <td>XX.X%</td>
+                            <td>0.XXX</td>
+                            <td>Value</td>
+                        </tr>
+                        <tr>
+                            <td>Method 2</td>
+                            <td>XX.X%</td>
+                            <td>0.XXX</td>
+                            <td>Value</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>5. Usage Examples</h2>
+            <p>Here are code examples for using this dataset:</p>
+
+            <h3>5.1 Data Loading</h3>
+            <div class="code-block">
+# Python code example
+import numpy as np
+import pandas as pd
+
+# Load subject data
+def load_subject_data(subject_id):
+    # Build path
+    base_path = f"data/raw/subject_{subject_id:03d}/"
+    
+    # Load signal data
+    signal_path = base_path + "signals/data.csv"
+    signals = pd.read_csv(signal_path)
+    
+    # Load annotations
+    annotation_path = base_path + "questionnaires/annotations.csv"
+    annotations = pd.read_csv(annotation_path)
+    
+    return signals, annotations
+
+# Usage example
+subject_id = 1
+signals, annotations = load_subject_data(subject_id)
+print(f"Loaded {len(signals)} signal records and {len(annotations)} annotations")
+            </div>
+
+            <h3>5.2 Feature Extraction</h3>
+            <div class="code-block">
+# Feature extraction example
+def extract_features(signals):
+    features = {}
+    
+    # Time domain features
+    features['mean'] = np.mean(signals, axis=0)
+    features['std'] = np.std(signals, axis=0)
+    features['max'] = np.max(signals, axis=0)
+    features['min'] = np.min(signals, axis=0)
+    
+    # Frequency domain features (example)
+    # ... frequency analysis code ...
+    
+    return features
+
+# Usage example
+features = extract_features(signals)
+print("Extracted features:", features.keys())
+            </div>
+        </div> -->
+
+
+    </div>
+    <!-- Added footer with university logos -->
+    <div class="footer">
+        <div class="university-logos">
+            <img src="figs/logo.png" alt="Queen Mary University of London">
+            <!-- <img src="/api/placeholder/180/50" alt="Università degli Studi di Trento"> -->
+        </div>
+    </div>
+</body>
+</html>
